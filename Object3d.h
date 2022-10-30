@@ -146,6 +146,13 @@ private: // 静的メンバ変数
 	// 頂点インデックス配列
 	static unsigned short indices[indexCount];
 
+	// ローカルワールド変換行列
+	XMMATRIX matWorld;
+	//ビルボード行列
+	static XMMATRIX matBillboard;
+	//Y軸回りビルボード行列
+	static XMMATRIX matBillboardY;
+
 private:// 静的メンバ関数
 	/// <summary>
 	/// デスクリプタヒープの初期化
@@ -214,9 +221,10 @@ private: // メンバ変数
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
 	XMFLOAT3 position = { 0,0,0 };
-	// ローカルワールド変換行列
-	XMMATRIX matWorld;
+	//// ローカルワールド変換行列
+	//XMMATRIX matWorld;
 	// 親オブジェクト
 	Object3d* parent = nullptr;
+	
 };
 
