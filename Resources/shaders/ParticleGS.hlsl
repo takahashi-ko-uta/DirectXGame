@@ -1,40 +1,5 @@
 #include "Particle.hlsli"
 
-//[maxvertexcount(3)]
-//void main(
-//	triangle VSOutput input[3] : SV_POSITION, 
-//	inout TriangleStream< GSOutput > output
-//)
-//{
-//	for (uint i = 0; i < 3; i++)
-//	{
-//		GSOutput element;
-//		element.svpos = input[i].svpos;
-//		element.normal = input[i].normal;
-//		element.uv = input[i].uv;
-//		output.Append(element);
-//	}
-//[maxvertexcount(3)]
-//void main(
-//	point VSOutput input[1] : SV_POSITION,
-//	inout TriangleStream< GSOutput > output
-//)
-//{
-//	GSOutput element;
-//	//共通
-//	element.normal = input[0].normal;
-//	element.uv = input[0].uv;
-//	//１点目
-//	element.svpos = input[0].svpos;
-//	output.Append(element);
-//	//２点目
-//	element.svpos = input[0].svpos + float4(10.0f,10.0f,0,0);
-//	output.Append(element);
-//	//３点目
-//	element.svpos = input[0].svpos + float4(10.0f, 0, 0, 0);
-//	output.Append(element);
-//}
-
 //四角形の頂点数
 static const uint vnum = 4;
 
@@ -67,11 +32,12 @@ void main(
 	//4点分まわす
 	for(uint i = 0;i < vnum;i++)
 	{
+		//中心からのオフセットをビルボード回転(モデル座標)
+		float4 offset = mul(matBillboard, offset_array[i]);
 		//ワールド座標ベースで、ずらす
-		element.svpos = input[0].pos + offset_array[i];
-		//ビュー、射影変換
+		element.svpos = input[0].pos + offset;
+		//ビュープロジェクション変換
 		element.svpos = mul(mat, element.svpos);
-		//element.uv = float2(0.5f, 0.5f);
 		element.uv = uv_array[i];
 		output.Append(element);
 	}
